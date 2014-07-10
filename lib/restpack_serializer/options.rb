@@ -25,11 +25,9 @@ module RestPack::Serializer
 
     def scope_with_filters
       scope_filter = {}
+
       @filters.keys.each do |filter|
-        value = @filters[filter]
-        if value.is_a?(String)
-          value = value.split(',')
-        end
+        value = query_to_array(@filters[filter])
         scope_filter[filter] = value
       end
 
@@ -72,6 +70,17 @@ module RestPack::Serializer
         sorting_parameters[sort_value] = sort_order if serializer.serializable_sorting_attributes.include?(sort_value)
       end
       sorting_parameters
+    end
+
+    def query_to_array(value)
+      case value
+        when String
+          value.split(',')
+        when Hash
+          value.each { |k, v| value[k] = query_to_array(v) }
+        else
+          value
+      end
     end
   end
 end
