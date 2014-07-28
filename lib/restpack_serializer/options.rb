@@ -8,7 +8,7 @@ module RestPack::Serializer
       params.symbolize_keys! if params.respond_to?(:symbolize_keys!)
 
       @page = params[:page] ? params[:page].to_i : 1
-      @page_size = params[:page_size] ? params[:parge_size].to_i : RestPack::Serializer.config.page_size
+      @page_size = params[:page_size] ? params[:page_size].to_i : RestPack::Serializer.config.page_size
       @include = params[:include] ? params[:include].split(',').map(&:to_sym) : []
       @filters = filters_from_params(params, serializer)
       @sorting = sorting_from_params(params, serializer)
