@@ -72,7 +72,7 @@ module RestPack
             data[:links][association.name.to_sym] = foreign_key_value.to_s
           end
         elsif association.macro == :has_many && association.options[:through]
-          ids = model.send(association.name).pluck(:id)
+          ids = model.send(association.name).pluck(:id).map { |id| id.to_s }
 
           data[:links] ||= {}
           data[:links][association.name.to_sym] = ids
