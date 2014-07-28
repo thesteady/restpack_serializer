@@ -160,7 +160,7 @@ describe RestPack::Serializer do
 
           json = artist_serializer.as_json(artist_with_fans)
           json[:links].should == {
-            fans: artist_with_fans.fans.collect(&:id)
+            fans: artist_with_fans.fans.collect {|obj| obj.id.to_s }
           }
         end
       end
