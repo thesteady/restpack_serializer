@@ -11,6 +11,7 @@ describe RestPack::Serializer::Paging do
     let(:params) { { } }
     let(:scope) { nil }
     let(:context) { { } }
+    let(:data) { page[:data] }
 
     context "with defaults" do
       it "page defaults to 1" do
@@ -87,13 +88,13 @@ describe RestPack::Serializer::Paging do
 
       it "returns reversed titles" do
         first = MyApp::Song.first
-        page[:songs].first[:title].should == first.title.reverse
+        data.first[:title].should == first.title.reverse
       end
     end
 
     it "serializes results" do
       first = MyApp::Song.first
-      page[:songs].first.should == {
+      data.first.should == {
         id: first.id.to_s,
         type: "song",
         title: first.title,
@@ -120,7 +121,7 @@ describe RestPack::Serializer::Paging do
       let(:params) { { page: '2' } }
 
       it "returns second page" do
-        page[:songs].length.should == 8
+        data.length.should == 8
         page[:meta][:songs][:page].should == 2
         page[:meta][:songs][:previous_page].should == 1
         page[:meta][:songs][:next_page].should == nil
@@ -144,7 +145,7 @@ describe RestPack::Serializer::Paging do
       end
 
       it "includes links between documents" do
-        song = page[:songs].first
+        song = data.first
         song_model = MyApp::Song.find(song[:id])
         song[:links][:album].should == song_model.album_id.to_s
         song[:links][:artist].should == song_model.artist_id.to_s
@@ -153,7 +154,7 @@ describe RestPack::Serializer::Paging do
         album_model = MyApp::Album.find(album[:id])
 
         album[:links][:artist].should == album_model.artist_id.to_s
-        (page[:songs].map { |song| song[:id] } - album[:links][:songs]).empty?.should be_truthy
+        (data.map { |song| song[:id] } - album[:links][:songs]).empty?.should be_truthy
       end
 
       context "with includes as comma delimited string" do
@@ -205,7 +206,7 @@ describe RestPack::Serializer::Paging do
         let(:params) { {} }
 
         it "uses the model's sorting" do
-          page[:songs].first[:id].to_i.should < page[:songs].last[:id].to_i
+          data.first[:id].to_i.should < data.last[:id].to_i
         end
       end
 
@@ -213,7 +214,7 @@ describe RestPack::Serializer::Paging do
         let(:params) { { sort: '-title' } }
 
         it 'returns a page with sorted songs' do
-          page[:songs].first[:title].should > page[:songs].last[:title]
+          data.first[:title].should > data.last[:title]
         end
 
         it 'includes the sorting in page hrefs' do

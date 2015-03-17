@@ -13,7 +13,7 @@ module RestPack::Serializer
 
       unless @resources.empty?
         inject_has_many_links!
-        result[@resources.keys.first] = @resources.values.first
+        result[:data] = @resources.values.first
 
         linked = @resources.except(@resources.keys.first)
         result[:included] = linked unless linked.empty?

@@ -18,7 +18,8 @@ describe RestPack::Serializer::SideLoading do
           let(:options) { RestPack::Serializer::Options.new(MyApp::ArtistSerializer, { "include" => "albums" }) }
 
           it "returns side-loaded albums" do
-            side_loads[:albums].count.should == @artist1.albums.count
+
+            side_loads[:data].count.should == @artist1.albums.count
             side_loads[:meta][:albums][:page].should == 1
             side_loads[:meta][:albums][:count].should == @artist1.albums.count
           end
@@ -33,7 +34,7 @@ describe RestPack::Serializer::SideLoading do
 
           it "returns side-loaded albums" do
             expected_count = @artist1.albums.count + @artist2.albums.count
-            side_loads[:albums].count.should == expected_count
+            side_loads[:data].count.should == expected_count
             side_loads[:meta][:albums][:count].should == expected_count
           end
         end
@@ -50,7 +51,7 @@ describe RestPack::Serializer::SideLoading do
           let(:models) {[artist_1]}
 
           it 'returns side-loaded fans' do
-            side_loads[:fans].count.should == artist_1.fans.count
+            side_loads[:data].count.should == artist_1.fans.count
             side_loads[:meta][:fans][:page].should == 1
             side_loads[:meta][:fans][:count].should == artist_1.fans.count
           end
@@ -61,7 +62,7 @@ describe RestPack::Serializer::SideLoading do
           it 'returns side-loaded fans' do
             expected_count = artist_1.fans.count  + artist_2.fans.count
 
-            side_loads[:fans].count.should == expected_count
+            side_loads[:data].count.should == expected_count
             side_loads[:meta][:fans][:page].should == 1
             side_loads[:meta][:fans][:count].should == expected_count
           end
@@ -72,7 +73,7 @@ describe RestPack::Serializer::SideLoading do
             end
             it "should not include duplicates in the included resource collection" do
               expected_count = (artist_1.fans + artist_2.fans).uniq.count
-              expect(side_loads[:fans].count).to eq(expected_count)
+              expect(side_loads[:data].count).to eq(expected_count)
               expect(side_loads[:meta][:fans][:count]).to eq(expected_count)
             end
           end

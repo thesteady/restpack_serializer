@@ -19,7 +19,7 @@ describe RestPack::Serializer::SideLoading do
           let(:stalker_count) { @artist1.stalkers.count }
 
           it "returns side-loaded albums" do
-            side_loads[:stalkers].count.should == stalker_count
+            side_loads[:data].count.should == stalker_count
             side_loads[:meta][:stalkers][:page].should == 1
             side_loads[:meta][:stalkers][:count].should == stalker_count
           end
@@ -34,7 +34,7 @@ describe RestPack::Serializer::SideLoading do
           let(:stalker_count) { @artist1.stalkers.count + @artist2.stalkers.count }
 
           it "returns side-loaded albums" do
-            side_loads[:stalkers].count.should == stalker_count
+            side_loads[:data].count.should == stalker_count
             side_loads[:meta][:stalkers][:count].should == stalker_count
           end
         end

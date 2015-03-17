@@ -10,21 +10,22 @@ describe RestPack::Serializer::Resource do
   let(:params) { { id: @song.id } }
   let(:scope) { nil }
   let(:context) { { } }
+  let(:data) { resource[:data] }
 
   it "returns a resource by id" do
-    resource[:songs].count.should == 1
-    resource[:songs][0][:id].should == @song.id.to_s
+    data.count.should == 1
+    data[0][:id].should == @song.id.to_s
   end
 
   it 'includes resource type' do
-    resource[:songs][0][:type].should == "song"
+    data[0][:type].should == "song"
   end
 
   context "with context" do
     let(:context) { { reverse_title?: true } }
 
     it "returns reversed titles" do
-      resource[:songs][0][:title].should == @song.title.reverse
+      data[0][:title].should == @song.title.reverse
     end
   end
 
@@ -44,7 +45,7 @@ describe RestPack::Serializer::Resource do
   describe "missing resource" do
     let(:params) { { id: "-99" } }
     it "returns no resource" do
-      resource[:songs].length.should == 0
+      data.length.should == 0
     end
 
     #TODO: add specs for jsonapi error format when it has been standardised
@@ -57,7 +58,7 @@ describe RestPack::Serializer::Resource do
     let(:resource) { MyApp::SongSerializer.resource(id: song.id.to_s) }
 
     it "should not have an artist link" do
-      resource[:songs][0][:links].keys.should_not include(:artist)
+      data[0][:links].keys.should_not include(:artist)
     end
   end
 end

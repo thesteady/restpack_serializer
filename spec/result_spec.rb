@@ -26,7 +26,7 @@ describe RestPack::Serializer::Result do
         end
 
         it 'returns correct jsonapi.org format' do
-          result[:albums].should == subject.resources[:albums]
+          result[:data].should == subject.resources[:albums]
           result[:meta].should == subject.meta
           result[:links].should == subject.links
         end
@@ -43,13 +43,14 @@ describe RestPack::Serializer::Result do
         end
 
         it 'returns correct jsonapi.org format, including injected has_many links' do
-          result[:albums].should == [{ id: '1', name: 'AMOK', links: { songs: ['91'] } }]
+          ## TODO: shouldn't this have :type, too?
+          result[:data].should == [{ id: '1', name: 'AMOK', links: { songs: ['91'] } }]
           result[:links].should == subject.links
           result[:included][:songs].should == subject.resources[:songs]
         end
 
         it 'includes resources in correct order' do
-          result.keys[0].should == :albums
+          result.keys[0].should == :data
           result.keys[1].should == :included
           result.keys[2].should == :links
           result.keys[3].should == :meta
@@ -62,7 +63,7 @@ describe RestPack::Serializer::Result do
           end
 
           it 'does not create duplicate has_many links' do
-            result[:albums].first[:links][:songs].count.should == 1
+            result[:data].first[:links][:songs].count.should == 1
           end
         end
       end
