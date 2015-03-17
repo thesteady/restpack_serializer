@@ -95,6 +95,7 @@ describe RestPack::Serializer::Paging do
       first = MyApp::Song.first
       page[:songs].first.should == {
         id: first.id.to_s,
+        type: "song",
         title: first.title,
         album_id: first.album_id,
         links: {

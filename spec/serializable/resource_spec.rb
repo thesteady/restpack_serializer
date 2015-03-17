@@ -16,6 +16,10 @@ describe RestPack::Serializer::Resource do
     resource[:songs][0][:id].should == @song.id.to_s
   end
 
+  it 'includes resource type' do
+    resource[:songs][0][:type].should == "song"
+  end
+
   context "with context" do
     let(:context) { { reverse_title?: true } }
 

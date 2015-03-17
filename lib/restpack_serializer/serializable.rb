@@ -47,6 +47,9 @@ module RestPack
         end
       end
 
+      # Don't return type if we have an empty result
+      # TODO: verify this is correct behavior via RC3.
+      add_type(data) if data.keys.any?
       add_custom_attributes(data)
       add_links(model, data)
 
@@ -58,6 +61,13 @@ module RestPack
     end
 
     private
+
+    def add_type(data)
+      # try to give the type.
+      # if using a custom serializer, use a default of "data" for type.
+      type = self.class.singular_key.to_s rescue 'data'
+      data.merge!({type: type})
+    end
 
     def add_custom_attributes(data)
       custom = custom_attributes

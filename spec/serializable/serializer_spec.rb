@@ -63,7 +63,7 @@ describe RestPack::Serializer do
     it "serializes to an array" do
       serializer.class.serialize(person).should == {
         people: [{
-          id: '123', name: 'Gavin', description: 'This is person #123',
+          id: '123', type: 'person', name: 'Gavin', description: 'This is person #123',
           href: '/people/123', custom_key: 'custom value for model id 123'
         }]
       }
@@ -73,7 +73,7 @@ describe RestPack::Serializer do
   describe ".as_json" do
     it "serializes specified attributes" do
       serializer.as_json(person).should == {
-        id: '123', name: 'Gavin', description: 'This is person #123',
+        id: '123', type: 'person', name: 'Gavin', description: 'This is person #123',
         href: '/people/123', custom_key: 'custom value for model id 123'
       }
     end
@@ -83,11 +83,11 @@ describe RestPack::Serializer do
       it "results in a serialized array" do
         serializer.as_json(people).should == [
           {
-            id: '123', name: 'Gavin', description: 'This is person #123',
+            id: '123', type: 'person', name: 'Gavin', description: 'This is person #123',
             href: '/people/123', custom_key: 'custom value for model id 123'
           },
           {
-            id: '123', name: 'Gavin', description: 'This is person #123',
+            id: '123', type: 'person', name: 'Gavin', description: 'This is person #123',
             href: '/people/123', custom_key: 'custom value for model id 123'
           }
         ]
@@ -96,11 +96,11 @@ describe RestPack::Serializer do
         it "results in a serialized array" do
           serializer.class.array_as_json(people).should == [
             {
-              id: '123', name: 'Gavin', description: 'This is person #123',
+              id: '123', type: 'person', name: 'Gavin', description: 'This is person #123',
               href: '/people/123', custom_key: 'custom value for model id 123'
             },
             {
-              id: '123', name: 'Gavin', description: 'This is person #123',
+              id: '123', type: 'person', name: 'Gavin', description: 'This is person #123',
               href: '/people/123', custom_key: 'custom value for model id 123'
             }
           ]
@@ -117,7 +117,7 @@ describe RestPack::Serializer do
     context "with options" do
       it "excludes specified attributes" do
         serializer.as_json(person, { include_description?: false }).should == {
-          id: '123', name: 'Gavin', href: '/people/123',
+          id: '123', type: 'person', name: 'Gavin', href: '/people/123',
           custom_key: 'custom value for model id 123'
         }
       end
