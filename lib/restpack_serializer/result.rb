@@ -16,7 +16,7 @@ module RestPack::Serializer
         result[@resources.keys.first] = @resources.values.first
 
         linked = @resources.except(@resources.keys.first)
-        result[:linked] = linked unless linked.empty?
+        result[:included] = linked unless linked.empty?
       end
 
       result[:links] = @links unless @links.empty?

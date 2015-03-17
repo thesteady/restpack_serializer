@@ -131,7 +131,7 @@ describe RestPack::Serializer::Paging do
       let(:params) { { include: 'albums' } }
 
       it "includes side-loaded models" do
-        page[:linked][:albums].should_not == nil
+        page[:included][:albums].should_not == nil
       end
 
       it "includes the side-loads in the main meta data" do
@@ -148,7 +148,7 @@ describe RestPack::Serializer::Paging do
         song[:links][:album].should == song_model.album_id.to_s
         song[:links][:artist].should == song_model.artist_id.to_s
 
-        album = page[:linked][:albums].first
+        album = page[:included][:albums].first
         album_model = MyApp::Album.find(album[:id])
 
         album[:links][:artist].should == album_model.artist_id.to_s
@@ -158,8 +158,8 @@ describe RestPack::Serializer::Paging do
       context "with includes as comma delimited string" do
         let(:params) { { include: "albums,artists" } }
         it "includes side-loaded models" do
-          page[:linked][:albums].should_not == nil
-          page[:linked][:artists].should_not == nil
+          page[:included][:albums].should_not == nil
+          page[:included][:artists].should_not == nil
         end
 
         it "includes the side-loads in page hrefs" do

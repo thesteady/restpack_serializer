@@ -70,7 +70,7 @@ describe RestPack::Serializer::SideLoading do
             before do
               artist_1.fans << artist_2.fans.first
             end
-            it "should not include duplicates in the linked resource collection" do
+            it "should not include duplicates in the included resource collection" do
               expected_count = (artist_1.fans + artist_2.fans).uniq.count
               expect(side_loads[:fans].count).to eq(expected_count)
               expect(side_loads[:meta][:fans][:count]).to eq(expected_count)

@@ -45,12 +45,12 @@ describe RestPack::Serializer::Result do
         it 'returns correct jsonapi.org format, including injected has_many links' do
           result[:albums].should == [{ id: '1', name: 'AMOK', links: { songs: ['91'] } }]
           result[:links].should == subject.links
-          result[:linked][:songs].should == subject.resources[:songs]
+          result[:included][:songs].should == subject.resources[:songs]
         end
 
         it 'includes resources in correct order' do
           result.keys[0].should == :albums
-          result.keys[1].should == :linked
+          result.keys[1].should == :included
           result.keys[2].should == :links
           result.keys[3].should == :meta
         end

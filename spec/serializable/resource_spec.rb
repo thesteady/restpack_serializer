@@ -28,8 +28,8 @@ describe RestPack::Serializer::Resource do
     let(:params) { { id: @song.id, include: 'albums' } }
 
     it "includes side-loaded models" do
-      resource[:linked][:albums].count.should == 1
-      resource[:linked][:albums].first[:id].should == @song.album.id.to_s
+      resource[:included][:albums].count.should == 1
+      resource[:included][:albums].first[:id].should == @song.album.id.to_s
     end
 
     it "includes the side-loads in the main meta data" do
