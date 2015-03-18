@@ -50,6 +50,7 @@ end
 ```javascript
 {
   "id": "1",
+  "type": "album",
   "title": "Kid A",
   "year": 2000,
   "artist_id": 1,
@@ -143,9 +144,10 @@ http://restpack-serializer-sample.herokuapp.com/api/v1/songs.json?page=2&page_si
 
 ```javascript
 {
-    "songs": [
+    "data": [
         {
             "id": "4",
+            "type": "song",
             "title": "How to Dissapear Completely",
             "href": "/songs/4",
             "links": {
@@ -155,6 +157,7 @@ http://restpack-serializer-sample.herokuapp.com/api/v1/songs.json?page=2&page_si
         },
         {
             "id": "5",
+            "type": "song",
             "title": "Treefingers",
             "href": "/songs/5",
             "links": {
@@ -164,6 +167,7 @@ http://restpack-serializer-sample.herokuapp.com/api/v1/songs.json?page=2&page_si
         },
         {
             "id": "6",
+            "type": "song",
             "title": "Optimistic",
             "href": "/songs/6",
             "links": {
@@ -232,9 +236,10 @@ which yields:
 
 ```javascript
 {
-    "albums": [
+    "data": [
         {
             "id": "1",
+            "type": "album",
             "title": "Kid A",
             "year": 2000,
             "href": "/albums/1",
@@ -244,6 +249,7 @@ which yields:
         },
         {
             "id": "2",
+            "type": "album",
             "title": "Amnesiac",
             "year": 2001,
             "href": "/albums/2",
@@ -253,6 +259,7 @@ which yields:
         },
         {
             "id": "3",
+            "type": "album",
             "title": "Murder Ballads",
             "year": 1996,
             "href": "/albums/3",
@@ -262,6 +269,7 @@ which yields:
         },
         {
             "id": "4",
+            "type": "album",
             "title": "Curtains",
             "year": 2005,
             "href": "/albums/4",
